@@ -26,7 +26,13 @@ def webhook():
     print("Request:")
     print(json.dumps(req, indent=4))
 
-    res = processRequest(req)
+    action = req.get("result").get("action")
+    if action == "yahooWeatherForecast":
+        res = processWeatherRequest(req)
+    elif action == "noYouHangUp":
+        res = processNoYouHangUpRequest(req)
+    else:
+        return
 
     res = json.dumps(res, indent=4)
     # print(res)
@@ -35,9 +41,11 @@ def webhook():
     return r
 
 
-def processRequest(req):
-    if req.get("result").get("action") != "yahooWeatherForecast":
-        return {}
+def processNoYouHangUpRequest(req):
+    return makeSpeechResponse("No, you hang up")
+
+
+def processWeatherRequest(req):
     baseurl = "https://query.yahooapis.com/v1/public/yql?"
     yql_query = makeYqlQuery(req)
     if yql_query is None:
@@ -90,12 +98,16 @@ def makeWebhookResult(data):
     print("Response:")
     print(speech)
 
+    return makeSpeechResponse(speech)
+
+
+def makeSpeechResponse(speech):
     return {
         "speech": speech,
         "displayText": speech,
         # "data": data,
         # "contextOut": [],
-        "source": "apiai-weather-webhook-sample"
+        "source": "apiai-webhook"
     }
 
 
