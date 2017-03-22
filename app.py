@@ -59,7 +59,7 @@ def processNoYouHangUpRequest(req):
         text = "Seriously, hang up"
     elif counter == 3:
         text = "YOU. HANG. UP"
-    elif
+    elif:
         text = "Go fuck yourself"
 
     return makeSpeechResponse(text, contextOut)
