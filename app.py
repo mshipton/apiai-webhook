@@ -10,6 +10,7 @@ from urllib.error import HTTPError
 
 import json
 import os
+import requests
 
 from flask import Flask
 from flask import request
@@ -119,9 +120,6 @@ def makeSpeechResponse(speech, contextOut=[]):
         "speech": speech,
         "displayText": speech,
         "contextOut": contextOut,
-        "parameters": {
-            "counter": "1"
-        },
         "source": "apiai-webhook"
     }
 
