@@ -105,7 +105,9 @@ def makeSpeechResponse(speech):
     return {
         "speech": speech,
         "displayText": speech,
-        # "data": data,
+        "data": {  
+            "counter": 1
+        },
         # "contextOut": [],
         "source": "apiai-webhook"
     }
