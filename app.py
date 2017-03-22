@@ -57,11 +57,9 @@ def processNoYouHangUpRequest(req):
         text = "No, you hang up silly!"
     elif counter == 3:
         text = "Seriously, hang up"
-    elif counter == 4:
-        text = "YOU. HANG. UP"
-    elif counter >= 5:
+    elif counter >= 4:
         contextOut = [{"name":"endhangup", "lifespan":1}]
-        text = "Go fuck yourself"
+        text = "YOU. HANG. UP"
 
     return makeSpeechResponse(text, contextOut)
 
