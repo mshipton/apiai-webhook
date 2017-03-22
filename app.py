@@ -45,7 +45,7 @@ def processNoYouHangUpRequest(req):
     counter = 1
 
     for context in req.get("result").get("contexts"):
-        if context.get("name") == "youHangUp":
+        if context.get("name") == "hangup":
             counter = context.get("parameters").get("counter")
             counter += 1
 
