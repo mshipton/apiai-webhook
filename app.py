@@ -105,10 +105,10 @@ def makeSpeechResponse(speech):
     return {
         "speech": speech,
         "displayText": speech,
-        "data": {  
+        "parameters": {
             "counter": 1
         },
-        # "contextOut": [],
+        "contextOut": [{"name":"weather", "lifespan":2, "parameters":{"city":"Rome"}}],
         "source": "apiai-webhook"
     }
 
