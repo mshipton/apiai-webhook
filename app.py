@@ -53,7 +53,13 @@ def processNoYouHangUpRequest(req):
     contextOut = [{"name":"hangup", "lifespan":1, "parameters":{"counter": counter}}]
     
     text = "No, you hang up"
-    if counter >= 3:
+    if counter == 1:
+        text = "No, you hang up silly!"
+    elif counter == 2:
+        text = "Seriously, hang up"
+    elif counter == 3:
+        text = "YOU. HANG. UP"
+    elif
         text = "Go fuck yourself"
 
     return makeSpeechResponse(text, contextOut)
