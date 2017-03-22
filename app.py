@@ -49,7 +49,7 @@ def processNoYouHangUpRequest(req):
             counter = context.get("parameters").get("counter")
             counter += 1
 
-    contextOut = [{"name":"youHangUp", "lifespan":1, "parameters":{"counter": counter}}]
+    contextOut = [{"name":"hangup", "lifespan":1, "parameters":{"counter": counter}}]
     
     text = "No, you hang up"
     if counter >= 3:
@@ -119,6 +119,9 @@ def makeSpeechResponse(speech, contextOut=[]):
         "speech": speech,
         "displayText": speech,
         "contextOut": contextOut,
+        "parameters": {
+            "counter": "1"
+        },
         "source": "apiai-webhook"
     }
 
