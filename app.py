@@ -43,13 +43,13 @@ def webhook():
 
 
 def processNoYouHangUpRequest(req):
-    counter = 1
+    counter = 0
 
     for context in req.get("result").get("contexts"):
         if context.get("name") == "hangup":
-            counter = context.get("parameters").get("counter")
-            counter += 1
+            counter = int(context.get("parameters").get("counter"))
 
+    counter += 1
     contextOut = [{"name":"hangup", "lifespan":1, "parameters":{"counter": counter}}]
     
     text = "No, you hang up"
@@ -59,7 +59,7 @@ def processNoYouHangUpRequest(req):
         text = "Seriously, hang up"
     elif counter == 4:
         text = "YOU. HANG. UP"
-    else:
+    elif counter >= 5:
         text = "Go fuck yourself"
 
     return makeSpeechResponse(text, contextOut)
