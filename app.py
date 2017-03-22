@@ -42,7 +42,19 @@ def webhook():
 
 
 def processNoYouHangUpRequest(req):
-    return makeSpeechResponse("No, you hang up")
+    counter = 1
+
+    for context in req.get("result").get("contexts"):
+        if context.get("name") == "youHangUp":
+            counter = context.get("parameters").get("counter")
+
+    contextOut = [{"name":"youHangUp", "lifespan":1, "parameters":{"counter": counter}}]
+    
+    text = "No, you hang up"
+    if counter >= 3:
+        text = "Go fuck yourself"
+
+    return makeSpeechResponse(text, contextOut)
 
 
 def processWeatherRequest(req):
@@ -101,16 +113,24 @@ def makeWebhookResult(data):
     return makeSpeechResponse(speech)
 
 
-def makeSpeechResponse(speech):
+def makeSpeechResponse(speech, contextOut=[]):
     return {
         "speech": speech,
         "displayText": speech,
-        "parameters": {
-            "counter": 1
-        },
-        "contextOut": [{"name":"weather", "lifespan":2, "parameters":{"city":"Rome"}}],
+        "contextOut": contextOut,
         "source": "apiai-webhook"
     }
+
+# def makeSpeechResponse(speech):
+#     return {
+#         "speech": speech,
+#         "displayText": speech,
+#         "parameters": {
+#             "counter": 1
+#         },
+#         "contextOut": [{"name":"youHangUp", "lifespan":1, "parameters":{"counter": }}],
+#         "source": "apiai-webhook"
+#     }
 
 
 if __name__ == '__main__':
