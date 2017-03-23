@@ -38,6 +38,8 @@ def webhook():
         res = processGoDutchRequest(req)
     elif action == "marriageAllowanceAges":
         res = processMarriageAllowanceRequest(req)
+    elif action == "whatAmICovering":
+        res = priceWhatAmICoveringRequest(req)
     else:
         return
 
@@ -46,6 +48,10 @@ def webhook():
     r = make_response(res)
     r.headers['Content-Type'] = 'application/json'
     return r
+
+def priceWhatAmICoveringRequest(req):
+    text = "Yes, I am covered in " + req.get("result").get("parameters").get("covering")
+    return makeSpeechResponse(text)
 
 def processMarriageAllowanceRequest(req):
     text = ""
