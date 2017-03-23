@@ -52,7 +52,7 @@ def processNoYouHangUpRequest(req):
     counter += 1
     contextOut = [{"name":"hangup", "lifespan":1, "parameters":{"counter": counter}}]
     
-    text = "No, you hang up"
+    text = "Ok, you hang up"
     if counter == 2:
         text = "No, you hang up silly!"
     elif counter == 3:
