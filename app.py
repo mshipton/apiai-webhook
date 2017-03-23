@@ -19,6 +19,8 @@ from flask import make_response
 # Flask app should start in global layout
 app = Flask(__name__)
 
+pound = u'\u00A3'
+
 
 @app.route('/webhook', methods=['POST'])
 def webhook():
@@ -32,6 +34,10 @@ def webhook():
         res = processWeatherRequest(req)
     elif action == "noYouHangUp":
         res = processNoYouHangUpRequest(req)
+    elif action == "goDutch":
+        res = processGoDutchRequest(req)
+    elif action == "marriageAllowanceAges":
+        res = processMarriageAllowanceRequest(req)
     else:
         return
 
@@ -41,6 +47,26 @@ def webhook():
     r.headers['Content-Type'] = 'application/json'
     return r
 
+def processMarriageAllowanceRequest(req):
+    text = ""
+    contextOut = []
+
+    yourAge = req.get("result").get("parameters").get("your_age")
+    partnerAge = req.get("result").get("parameters").get("partner_age")
+
+    if yourAge >= 82 or partnerAge >= 82:
+        text = "Good news! You are elligible for Married Couple's Allowance"
+    else:
+        text = "Do you or your partner earn less than " + pound + "11000 per year?" 
+        contextOut = [{"name":"ask_lower_salary", "lifespan":5}]
+
+    return makeSpeechResponse(text, contextOut) 
+
+def processGoDutchRequest(req):
+    # is percentage present?
+    # yes -> do calc
+    # no -> set context to obtain percent value
+    return makeSpeechResponse("work in progress")
 
 def processNoYouHangUpRequest(req):
     counter = 0
