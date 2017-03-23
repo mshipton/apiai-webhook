@@ -51,8 +51,8 @@ def processMarriageAllowanceRequest(req):
     text = ""
     contextOut = []
 
-    yourAge = req.get("result").get("parameters").get("your_age")
-    partnerAge = req.get("result").get("parameters").get("partner_age")
+    yourAge = int(req.get("result").get("parameters").get("your_age"))
+    partnerAge = int(req.get("result").get("parameters").get("partner_age"))
 
     if yourAge >= 82 or partnerAge >= 82:
         text = "Good news! You are elligible for Married Couple's Allowance"
