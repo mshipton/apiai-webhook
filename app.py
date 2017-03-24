@@ -39,7 +39,7 @@ def webhook():
     elif action == "marriageAllowanceAges":
         res = processMarriageAllowanceRequest(req)
     elif action == "whatAmICovering":
-        res = priceWhatAmICoveringRequest(req)
+        res = processWhatAmICoveringRequest(req)        
     else:
         return
 
@@ -49,8 +49,8 @@ def webhook():
     r.headers['Content-Type'] = 'application/json'
     return r
 
-def priceWhatAmICoveringRequest(req):
-    text = "Yes, I am covered in " + req.get("result").get("parameters").get("covering")
+def processWhatAmICoveringRequest(req):
+    text = "I am covered in " + req.get("result").get("parameters").get("covering")
     return makeSpeechResponse(text)
 
 def processMarriageAllowanceRequest(req):
@@ -86,10 +86,8 @@ def processNoYouHangUpRequest(req):
     
     text = "Ok, you hang up"
     if counter == 2:
-        text = "No, you hang up silly!"
-    elif counter == 3:
         text = "Seriously, hang up"
-    elif counter >= 4:
+    elif counter >= 3:
         contextOut = [{"name":"endhangup", "lifespan":1}]
         text = "YOU. HANG. UP"
 
