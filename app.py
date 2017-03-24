@@ -89,7 +89,8 @@ def processNoYouHangUpRequest(req):
         text = "Seriously, hang up"
     elif counter >= 3:
         contextOut = [{"name":"endhangup", "lifespan":1}]
-        text = "YOU. HANG. UP"
+        sound = '<audio src="https://orsilus.com/test/whatami/sad_trombone.wav" />'
+        text = "<speak>I've had enough of this!{}></speak>".format(sound)
 
     return makeSpeechResponse(text, contextOut)
 
